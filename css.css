@@ -43,11 +43,11 @@ a:link {
     font-weight: bold;
 }
 
-a:visited {
+/* a:visited {
     color: blue;
     font-weight: bold;
     text-decoration: none;
-}
+} */
 
 a:hover {
     color: #ff0000;
