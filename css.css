@@ -1,0 +1,317 @@
+#content {
+    text-align: justify;
+}
+
+hr {
+    width: auto !important;
+    margin: 20px;
+}
+
+body {
+    font-family: Arial, Verdana;
+    font-size: 12pt;
+    background-color: #fbfbfb;
+    margin: 15px;
+}
+
+h1 {
+    font-family: Arial, Verdana;
+    font-size: 14pt;
+    font-weight: bold;
+    color: #ff0000;
+}
+
+h2 {
+    font-family: Arial, Verdana;
+    font-size: 12pt;
+    font-weight: bold;
+    color: #ff0000;
+    margin: 10px;
+}
+
+h3 {
+    font-family: Arial, Verdana;
+    font-size: 12pt;
+    font-weight: bold;
+    color: green;
+    margin: 10px;
+}
+
+a:link {
+    color: blue;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+a:visited {
+    color: blue;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #ff0000;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+p.classbar {
+    margin-bottom: 0px;
+    color: #000000;
+    font-size: 14pt;
+    text-decoration: underline;
+}
+
+p.classf {
+    margin: 10px;
+    font-size: 14px;
+}
+
+p.classh {
+    color: #000000;
+    font-size: 18pt;
+}
+
+p.classborder {
+    border: double 4px #ff0000;
+    font-size: 16pt;
+    font-weight: bold;
+}
+
+p.classtopic {
+    font-size: 10pt;
+    font-style: italic;
+    font-weight: bold;
+    color: green;
+}
+
+p.classalert {
+    border: 1px solid green;
+    padding: 5px;
+    background: #ffffcc;
+    font-weight: bold;
+    color: #ffa500;
+    text-align: center;
+    font-size: 16pt;
+}
+
+.block1 {
+    height: 60px;
+    padding: 10px;
+}
+
+.adv {
+    width: 241px;
+    padding-left: 10px;
+}
+
+.adv2 {
+    margin: 0 auto;
+    width: 620px;
+}
+
+.advup {
+    width: 484px;
+}
+
+.advb {
+    width: 320px;
+}
+
+#primer {
+    height: 500px;
+    width: 100% !important;
+    margin-left: auto !important;
+    border: 1px solid gray;
+    overflow-x: hidden;
+}
+
+#bar {
+    height: 360px;
+    border: 0px solid gray;
+    overflow: scroll;
+    overflow-x: hidden;
+    padding: 10px;
+    font-size: 10pt;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgb(217, 217, 217);
+}
+
+p.logo {
+    font-size: 35pt;
+    color: red;
+    font-family: \"Inter\", sans-serif;
+    display: inline;
+}
+
+.logo_black {
+    font-size: 30pt;
+    color: black;
+    font-family: \"Cambria\", math;
+}
+
+.cources {
+    font-size: 14pt;
+    text-align: center;
+    padding: 10px 0;
+    font-weight: bold;
+}
+
+.blink_text:hover {
+    color: red;
+}
+
+.blink_text {
+    animation: blinker 1s linear infinite;
+}
+
+@keyframes blinker {
+    0% {
+        color: red;
+    }
+
+    50% {
+        color: blue;
+    }
+
+    100% {
+        color: red;
+    }
+}
+
+.new {
+    font-family: 'Times New Roman', Times, serif;
+    font-weight: 700;
+    font-size: 16pt;
+    color: red;
+    margin-left: 15px;
+}
+
+.menu {
+    width: 300px;
+    margin-right: 15px;
+}
+
+.container {
+    max-width: 1020px;
+    width: auto;
+    margin: 0 auto;
+    display: flex;
+}
+
+.fly {
+    background-color: white;
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 15px;
+    box-shadow: 0px 0px 10px rgb(217, 217, 217);
+}
+
+.cont {
+    width: 100%;
+    min-width: 350px;
+    float: right;
+    display: inline-block;
+    vertical-align: top;
+}
+
+ul.themes,
+ul.themes ul {
+    list-style-type: none;
+    margin: 0 auto;
+    padding: 0;
+}
+
+ul.themes ul {
+    display: block;
+}
+
+ul.themes li.selected ul {
+    display: block;
+}
+
+ul.themes li {
+    background: white;
+    color: #000;
+    margin: 0;
+    -webkit-transition: 0.1s;
+    -moz-transition: 0.1s;
+    transition: 0.1s;
+}
+
+ul.themes li p {
+    font-size: 14pt;
+    padding: 7px;
+    padding-right: 7px;
+    margin: 0px;
+}
+
+ul.themes li ul li {
+    background: white;
+    color: #333;
+    border-radius: 0px;
+    display: flex
+}
+
+ul.themes>li:nth-child(2n-1),
+ul.themes li ul li:nth-child(2n) {
+    background: rgb(231, 231, 231);
+}
+
+ul.themes li:hover,
+ul.themes li ul li:hover {
+    background: rgb(211, 211, 211);
+}
+
+ul.themes a:link {
+    font-size: 12pt;
+    font-weight: normal;
+}
+
+ul.themes li ul li:first-child {
+    border-radius: 0px;
+    border: 0;
+}
+
+.deactive:after {
+    content: '\+';
+    color: #000;
+    font-weight: bold;
+    float: right;
+    margin-left: 10px;
+}
+
+.active:after {
+    content: \"-\";
+    color: #000;
+    font-weight: bold;
+    float: right;
+}
+
+.themes a {
+    color: black;
+}
+
+.high p {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.finder div {
+    display: inline-block;
+    padding: 7px;
+    color: white;
+    border-radius: 5px;
+    background-color: #ffc622;
+}
+
+#menu li a {
+    display: inline-block;
+    padding: 7px;
+    width: 100%
+}
+
+a span {
+    display: block;
+    border: 1px solid #FF0;
+}
