@@ -306,7 +306,8 @@ ul.themes li ul li:first-child {
 #menu li a {
     display: inline-block;
     padding: 7px;
-    width: 100%
+    width: 100%;
+    color: black;
 }
 
 a span {
