@@ -38,16 +38,14 @@ h3 {
 }
 
 a:link {
-    color: blue;
     text-decoration: none;
     font-weight: bold;
 }
 
-/* a:visited {
-    color: blue;
+a:visited {
     font-weight: bold;
     text-decoration: none;
-} */
+}
 
 a:hover {
     color: #ff0000;
