@@ -303,7 +303,7 @@ ul.themes li ul li:first-child {
     background-color: #ffc622;
 }
 
-#menu li a {
+.sublist li a {
     display: inline-block;
     padding: 7px;
     width: 100%;
