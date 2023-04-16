@@ -252,7 +252,7 @@ ul.themes li ul li:first-child {
     border: 0;
 }
 
-.themes li ul li :last-child {
+.themes li :nth-last-child(-n + 1) ul li :last-child {
     border-radius: 0px 0px 10px 10px;
 }
 
