@@ -98,24 +98,6 @@ p.classalert {
     padding: 10px;
 }
 
-.adv {
-    width: 241px;
-    padding-left: 10px;
-}
-
-.adv2 {
-    margin: 0 auto;
-    width: 620px;
-}
-
-.advup {
-    width: 484px;
-}
-
-.advb {
-    width: 320px;
-}
-
 #primer {
     height: 500px !important;
     width: 100% !important;
@@ -208,7 +190,6 @@ p.logo {
 .cont {
     width: 100%;
     min-width: 350px;
-    float: right;
     display: inline-block;
     vertical-align: top;
 }
@@ -270,6 +251,15 @@ ul.themes li ul li:first-child {
     border-radius: 0px;
     border: 0;
 }
+
+.themes li :last-child {
+    border-radius: 0px 0px 10px 10px;
+}
+
+.themes li:nth-last-child(2) {
+    border-radius: 0px 0px 10px 10px;
+}
+
 
 .deactive:after {
     content: '\+';
