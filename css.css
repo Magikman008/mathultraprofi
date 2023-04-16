@@ -137,7 +137,7 @@ p.logo {
     font-weight: bold;
 }
 
-.blink_text:hover {
+.blinker:hover {
     color: red !important;
 }
 
