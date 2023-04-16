@@ -273,7 +273,7 @@ ul.themes li ul li:first-child {
 }
 
 .active:after {
-    content: '\-' !important;
+    content: '\−' !important;
 }
 
 .themes a {
