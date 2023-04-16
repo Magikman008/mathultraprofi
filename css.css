@@ -269,7 +269,7 @@ ul.themes li ul li:first-child {
 }
 
 .active:after {
-    content: \"-\";
+    content: \"-\" !important;
     color: #000;
     font-weight: bold;
     float: right;
