@@ -138,7 +138,7 @@ p.logo {
 }
 
 .blink_text:hover {
-    color: red;
+    color: red !important;
 }
 
 .blink_text {
