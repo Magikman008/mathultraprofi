@@ -108,7 +108,7 @@ p.classalert {
     width: 100% !important;
     margin-left: auto !important;
     border: 1px solid gray !important;
-    overflow-x: hidden !important;
+    overflow-x: auto !important;
 }
 
 #bar {
