@@ -261,7 +261,7 @@ ul.themes li ul li:first-child {
     border-radius: 0px 0px 10px 10px;
 }
 
-.themes > li:last-child {
+.themes>li:last-child {
     border-radius: 0px 0px 10px 10px;
 }
 
@@ -308,4 +308,17 @@ ul.themes li ul li:first-child {
 a span {
     display: block;
     border: 1px solid #FF0;
+}
+
+*::-webkit-scrollbar {
+    width: 10px;
+}
+
+*::-webkit-scrollbar-thumb {
+    background: #666;
+    border-radius: 20px;
+}
+
+*::-webkit-scrollbar-track {
+    background: #ddd;
 }
