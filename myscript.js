@@ -39,7 +39,7 @@ function ajaxLoad(href, isPopState = false) {
     }
 
     $.ajax({
-        url: "http://mathprofi.ru/" + href,
+        url: href,
         type: "GET",
         success: function (response) {
             try {
