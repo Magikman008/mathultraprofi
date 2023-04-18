@@ -4,7 +4,7 @@
 
 hr {
     width: auto !important;
-    margin: 20px;
+    margin: 10px;
 }
 
 body {
@@ -12,29 +12,6 @@ body {
     font-size: 12pt;
     background-color: #fbfbfb;
     margin: 15px;
-}
-
-h1 {
-    font-family: Arial, Verdana;
-    font-size: 14pt;
-    font-weight: bold;
-    color: #ff0000;
-}
-
-h2 {
-    font-family: Arial, Verdana;
-    font-size: 12pt;
-    font-weight: bold;
-    color: #ff0000;
-    margin: 10px;
-}
-
-h3 {
-    font-family: Arial, Verdana;
-    font-size: 12pt;
-    font-weight: bold;
-    color: green;
-    margin: 10px;
 }
 
 a:link {
@@ -53,26 +30,18 @@ a:hover {
     font-weight: bold;
 }
 
-.first-course .secons-course {
-    font-size: 12px;
+a:hover .blink_text {
+    color: #ff0000;
+    animation: none;
 }
 
-p.classbar {
-    margin-bottom: 0px;
-    margin-left: 7px;
-    color: #000000;
-    font-size: 14pt;
-    text-decoration: underline;
+.first-course .secons-course {
+    font-size: 12px;
 }
 
 p.classf {
     margin: 10px;
     font-size: 14px;
-}
-
-p.classh {
-    color: #000000;
-    font-size: 16pt;
 }
 
 p.classborder {
@@ -122,11 +91,17 @@ p.classalert {
     box-shadow: 0px 0px 10px rgb(217, 217, 217);
 }
 
-p.logo {
+.logo {
     font-size: 35pt;
     color: red;
     font-family: \"Inter\", sans-serif;
     display: inline;
+    font-weight: normal;
+}
+
+.slogan {
+    color: #000000;
+    font-size: 16pt;
 }
 
 .logo_black {
@@ -142,10 +117,6 @@ p.logo {
     font-weight: bold;
 }
 
-.blinker:hover {
-    color: red !important;
-}
-
 .blink_text {
     animation: blinker 1s linear infinite;
 }
@@ -156,7 +127,7 @@ p.logo {
     }
 
     50% {
-        color: blue;
+        color: #3366CC;
     }
 
     100% {
@@ -184,11 +155,14 @@ p.logo {
     display: flex;
 }
 
+.menu .fly {
+    margin-bottom: 15px;
+}
+
 .fly {
     background-color: white;
     border-radius: 10px;
     padding: 10px;
-    margin-bottom: 15px;
     box-shadow: 0px 0px 10px rgb(217, 217, 217);
 }
 
@@ -238,7 +212,7 @@ ul.themes li ul li {
 }
 
 ul.themes>li:nth-child(2n-1),
-ul.themes li ul li:nth-child(2n) {
+ul.themes>li ul li:nth-child(2n) {
     background: rgb(231, 231, 231);
 }
 

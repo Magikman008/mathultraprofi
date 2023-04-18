@@ -1,0 +1,36 @@
+{
+  "name": "MathUltraProfi",
+  "version": "1.0",
+  "description": "My awesome extension",
+  "author": "Andrew Dubov",
+  "manifest_version": 3,
+  "permissions": [],
+  "action": {
+      "default_popup":"popup.html",
+      "default_icon": {
+        "16": "icons/favicon16.png",
+        "32": "icons/favicon32.png"
+      }  
+  },  
+  "content_scripts": [
+    {
+      "matches": ["*://*.mathprofi.ru/*", "*://*.mathprofi.net/*"],
+      "css": ["css.css"],
+      "all_frames": true,
+      "js": ["jquery-3.6.4.min.js", "myscript.js"],
+      "run_at": "document_start"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [ "body.html" ],
+      "matches": [ "*://*.mathprofi.ru/*", "*://*.mathprofi.net/*"]
+    }
+  ], 
+  "icons": {
+    "16": "icons/favicon16.png",
+    "32": "icons/favicon32.png",
+    "48": "icons/favicon180.png",
+    "128": "icons/favicon180.png"
+    }
+}
