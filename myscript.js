@@ -33,11 +33,26 @@ function minWidth() {
     }
 }
 
+function isPdf(href) {
+    let ext = href.split('.').pop();
+
+    if (ext === "pdf") {
+        return true;
+    }
+    return false;
+}
+
 function ajaxLoad(href, isPopState = false) {
     if (checkURL(href) === true) {
         return;
     }
 
+    if (isPdf(href) === true) {
+        $('#content').html('<object data="' + href + '" type="application/pdf" width="100%" height="600"></object>');
+        if (!isPopState) {
+            window.history.pushState({}, '', href);
+        }
+    }
     $.ajax({
         url: href,
         type: "GET",
@@ -83,7 +98,7 @@ function ajaxLoad(href, isPopState = false) {
                 window.location.href = href;
             }
         }, error: function (jqXHR, textStatus, errorThrown) {
-            //window.location.href = href;
+            window.location.href = href;
             console.log("Ошибка загрузки данных: " + textStatus + " " + errorThrown);
         }
     });
@@ -155,6 +170,9 @@ document.addEventListener('DOMContentLoaded', function () {
     while (firstChild.is('br')) {
         firstChild.remove();
         firstChild = temp.children().first();
+    }
+    if (isPdf(window.location.href) === true) {
+        return;
     }
 
     temp = temp.html();

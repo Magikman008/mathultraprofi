@@ -169,6 +169,7 @@ p.classalert {
 .cont {
     width: 100%;
     min-width: 350px;
+    height: fit-content;
     display: inline-block;
     vertical-align: top;
 }
