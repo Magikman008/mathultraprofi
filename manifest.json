@@ -23,7 +23,7 @@
   ],
   "web_accessible_resources": [
     {
-      "resources": [ "body.html" ],
+      "resources": [ "body.html", "./icons/up_arrow.svg" ],
       "matches": [ "*://*.mathprofi.ru/*", "*://*.mathprofi.net/*"]
     }
   ], 

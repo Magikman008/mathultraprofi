@@ -19,8 +19,8 @@ function minWidth() {
     let maxWidth = 0;
 
     images.forEach(image => {
-        const width = image.offsetWidth;
-        if (image.offsetWidth > maxWidth) {
+        const width = image.width;
+        if (width > maxWidth) {
             maxWidth = width;
         }
     });
@@ -47,12 +47,20 @@ function ajaxLoad(href, isPopState = false) {
         return;
     }
 
-    if (isPdf(href) === true) {
-        $('#content').html('<object data="' + href + '" type="application/pdf" width="100%" height="600"></object>');
-        if (!isPopState) {
-            window.history.pushState({}, '', href);
-        }
-    }
+    // if (isPdf(href) === true) {
+    //     $('#content').fadeOut(300, function () {
+    //         $('#content').html('<object data="' + href + '" type="application/pdf" width="100%" height="600" style="border-radius: 10px"></object>');
+
+    //         bindLinkClickHandler($('#content').find('a'));
+    //         $(this).fadeIn(300, minWidth());
+    //     });
+    //     document.getElementsByClassName("cont")[0].style.padding = '0px';
+    //     if (!isPopState) {
+    //         window.history.pushState({}, '', href);
+    //     }
+    //     return;
+    // }
+
     $.ajax({
         url: href,
         type: "GET",
@@ -81,7 +89,8 @@ function ajaxLoad(href, isPopState = false) {
                 $('#content').fadeOut(300, function () {
                     $('#content').html(tdElements.html());
                     bindLinkClickHandler($('#content').find('a'));
-                    $(this).fadeIn(300, minWidth());
+                    minWidth();
+                    $(this).fadeIn(300);
                 });
 
                 if (!checkURL(href)) {
@@ -96,9 +105,12 @@ function ajaxLoad(href, isPopState = false) {
             } catch (error) {
                 console.log(error);
                 window.location.href = href;
+                location.reload(false);
             }
         }, error: function (jqXHR, textStatus, errorThrown) {
             window.location.href = href;
+            location.reload(false);
+
             console.log("Ошибка загрузки данных: " + textStatus + " " + errorThrown);
         }
     });
@@ -171,9 +183,10 @@ document.addEventListener('DOMContentLoaded', function () {
         firstChild.remove();
         firstChild = temp.children().first();
     }
-    if (isPdf(window.location.href) === true) {
-        return;
-    }
+
+    // if (isPdf(window.location.href) === true) {
+    //     return;
+    // }
 
     temp = temp.html();
 
@@ -230,8 +243,21 @@ document.addEventListener('DOMContentLoaded', function () {
                     scrollTop: 0
                 }, 1);
             }
+
+            $(window).scroll(function () {
+                if ($(this).scrollTop() > 200) {
+                    $('#btnScrollTop').fadeIn();
+                } else {
+                    $('#btnScrollTop').fadeOut();
+                }
+            });
+
+            $('#btnScrollTop').click(function () {
+                $('html, body').animate({
+                    scrollTop: 0
+                }, 600);
+                return false;
+            });
         }
     });
 });
-
-

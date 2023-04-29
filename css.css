@@ -213,7 +213,7 @@ ul.themes li ul li {
 }
 
 ul.themes>li:nth-child(2n-1),
-ul.themes>li ul li:nth-child(2n) {
+ul.themes>li ul>li:nth-child(2n) {
     background: rgb(231, 231, 231);
 }
 
@@ -252,6 +252,10 @@ ul.themes li ul li:first-child {
     position: relative;
 }
 
+.active {
+    background-color: rgb(211, 211, 211);
+}
+
 .active:after {
     content: '\−' !important;
 }
@@ -272,6 +276,11 @@ ul.themes li ul li:first-child {
     border-radius: 5px;
     background-color: #ffc622;
 }
+
+/* .sublist {
+    border-top: 1px solid grey;
+    border-bottom: 1px solid grey;
+} */
 
 .sublist li a {
     display: inline-block;
@@ -297,4 +306,29 @@ a span {
 
 *::-webkit-scrollbar-track {
     background: #ddd;
+}
+
+#btnScrollTop {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    background-color: white;
+    border-radius: 22px;
+    box-shadow: 0px 0px 10px rgb(217, 217, 217);
+    cursor: pointer;
+    width: 44px;
+    height: 44px;
+}
+
+#btnScrollTop::before {
+    content: "";
+    text-align: center;
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    left: 12px;
+    top: 12px;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-image: url('chrome-extension://__MSG_@@extension_id__/icons/up_arrow.svg');
 }
