@@ -4,7 +4,7 @@
   "description": "My awesome extension",
   "author": "Andrew Dubov",
   "manifest_version": 3,
-  "permissions": [],
+  "permissions": ["storage"],
   "action": {
       "default_popup":"popup.html",
       "default_icon": {
@@ -23,7 +23,7 @@
   ],
   "web_accessible_resources": [
     {
-      "resources": [ "body.html", "icons/up_arrow.svg" ],
+      "resources": [ "body.html", "icons/*", "fonts/*"],
       "matches": [ "*://*.mathprofi.ru/*", "*://*.mathprofi.net/*"]
     }
   ], 

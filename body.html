@@ -1,31 +1,62 @@
 <div class="container">
+  <div id="settings" style="display:block;"></div>
+  <div id="popup" class="popup">
+    <div class="popup-content">
+      <div class="settings-head">
+        <img src="chrome-extension://eiobcolmceamldmjmeanfilkehlchmdp/icons/favicon32.png">
+        <div>Настройки</div>
+        <div id="closeBtn" class="close">
+          <img src="chrome-extension://eiobcolmceamldmjmeanfilkehlchmdp/icons/close.svg">
+        </div>
+      </div>
+      <hr style="margin: 8px 0 !important;">
+      <div class="item">
+        <img src="chrome-extension://eiobcolmceamldmjmeanfilkehlchmdp/icons/font.svg">
+        <div class="setting-text">
+          <div class="setting-name">Улучшеный шрифт</div>
+          <div class="setting-descrip">Использует более приятный для глаз шрифт</div>
+        </div>
+        <label class="switch">
+          <input type="checkbox" id="font">
+          <span class="slider round"></span>
+        </label>
+      </div>
+      <div class="item">
+        <img src="chrome-extension://eiobcolmceamldmjmeanfilkehlchmdp/icons/night.svg">
+        <div class="setting-text">
+          <div class="setting-name">Ночной режим</div>
+          <div class="setting-descrip">Темный режим для ночной учёбы</div>
+        </div>
+        <label class="switch">
+          <input type="checkbox" id="theme">
+          <span class="slider round"></span>
+        </label>
+      </div>
+    </div>
+  </div>
   <div id="btnScrollTop" style="display:none;"></div>
   <div class="menu">
     <div class="fly">
       <a href="/">
-      <p class="logo" alt="Математика для заочников и не только">ma<font class="logo_black">∑</font>prof<font
-          class="logo_black">∫</font>.ru</p>
-        </a>
-      <p class=slogan align="center">Высшая математика это просто и доступно!</p>
+        <p class="logo" alt="Математика для заочников и не только">ma<font class="logo_black">∑</font>prof<font
+            class="logo_black">∫</font>.ru</p>
+      </a>
+      <p class=slogan>Высшая математика это просто и доступно!</p>
     </div>
     <div class="fly">
-      <p align="center">Если сайт упал, используйте ЗЕРКАЛО:
+      <p>Если сайт упал, используйте ЗЕРКАЛО:
         <a href="https://mathprofi.net/">mathprofi.net</a>
       </p>
-      <p align="center">Наш форум, библиотека и блог
+      <p>Наш форум, библиотека и блог
         <a href="https://mathprofi.com/" class="blinker">mathprofi<font class="blink_text">.com</font></a>
       </p>
     </div>
     <div id="first-course" class="fly" style="padding: 0px;"></div>
     <div id="second-course" class="fly" style="padding: 0px;"></div>
-    <div class="fly high">
-      <div align="center" style="font-weight: bold; text-align: center; font-size: 14pt;">Высшая математика:
+    <div class="fly">
+      <div style="padding: 0 !important;" class="title">Дополнительные материалы:
       </div>
-      <div align="center">
-        <p>
-          <a href="index.html">Математика для заочников
-          </a>
-        </p>
+      <div>
         <p>
           <a href="matematicheskie_formuly.html">Математические формулы, таблицы и другие материалы
           </a>

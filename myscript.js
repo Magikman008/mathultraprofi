@@ -4,7 +4,6 @@ function checkURL(href) {
 
     if (hash && window.location.pathname === url.pathname) {
         let element = document.querySelector('a[name="' + hash.substring(1) + '"]');
-
         if (element) {
             element.scrollIntoView({ behavior: 'smooth' });
             return true;
@@ -62,6 +61,27 @@ function ajaxLoad(href, isPopState = false) {
     // }
 
     $.ajax({
+        xhr: function () {
+            var xhr = new window.XMLHttpRequest();
+            // прогресс загрузки на сервер
+            xhr.upload.addEventListener("progress", function (evt) {
+                if (evt.lengthComputable) {
+                    var percentComplete = evt.loaded / evt.total;
+                    console.log("pivo");
+                    console.log(percentComplete);
+                }
+            }, false);
+            // прогресс скачивания с сервера
+            xhr.addEventListener("progress", function (evt) {
+                if (evt.lengthComputable) {
+                    var percentComplete = evt.loaded / evt.total;
+                    console.log("pivo");
+                    // делать что-то...
+                    console.log(percentComplete);
+                }
+            }, false);
+            return xhr;
+        },
         url: href,
         type: "GET",
         success: function (response) {
@@ -166,6 +186,44 @@ function bindLinkClickHandler(a) {
     });
 }
 
+function checkSettings() {
+    chrome.storage.sync.get(['enabled'], function (result) {
+        if (!result.enabled) {
+            chrome.storage.sync.set({
+                'font': false,
+                'font': "Arial, sans-serif"
+            }, function () { });
+        }
+    });
+}
+
+function bindSettings() {
+    const fontSwitch = document.getElementById('font');
+    chrome.storage.sync.get(['fontToggle', 'font'], function (result) {
+        fontSwitch.checked = result.fontToggle;
+        document.documentElement.style.setProperty('--font', result.font);
+    });
+
+    function toggleFont() {
+        if (fontSwitch.checked) {
+            chrome.storage.sync.set({
+                'fontToggle': true,
+                'font': '-apple-system,BlinkMacSystemFont,"Segoe UI Adjusted","Segoe UI","Liberation Sans",sans-serif'
+            }, function () {
+                document.documentElement.style.setProperty('--font', '-apple-system,BlinkMacSystemFont,"Segoe UI Adjusted","Segoe UI","Liberation Sans",sans-serif');
+            });
+        } else {
+            chrome.storage.sync.set({
+                'fontToggle': false,
+                'font': "Arial, sans-serif"
+            }, function () {
+                document.documentElement.style.setProperty('--font', "Arial, sans-serif");
+            });
+        }
+    }
+    fontSwitch.addEventListener('change', toggleFont, false);
+}
+
 document.addEventListener('DOMContentLoaded', function () {
     $('noindex').each(function () {
         $(this).remove();
@@ -206,7 +264,7 @@ document.addEventListener('DOMContentLoaded', function () {
             document.getElementById('content').innerHTML = temp;
 
             $('#first-course').append('<ul class="themes"> </ul>');
-            $('#first-course').prepend('<div class="cources">Первый курс:</div><div style="padding: 0 10px;" align="center">' + subtopics.eq(0).find('a').eq(0).removeAttr('class').prop('outerHTML') + '<br>' + subtopics.eq(0).find('a').eq(1).removeAttr('class').prop('outerHTML') + '</div>')
+            $('#first-course').prepend('<div class="title">Первый курс:</div><div style="padding: 0 10px;" align="center">' + subtopics.eq(0).find('a').eq(0).removeAttr('class').prop('outerHTML') + '<br>' + subtopics.eq(0).find('a').eq(1).removeAttr('class').prop('outerHTML') + '</div>')
 
             for (let j = 0; j < topics.length; j += 1) {
                 $('#first-course .themes').append('<li><p class="deactive">' + topics.eq(j).html() + '</p><ul class="sublist" style="display: none;">');
@@ -217,7 +275,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }
 
             $('#second-course').append('<ul class="themes"> </ul>');
-            $('#second-course').prepend('<div class="cources">Второй курс:</div>')
+            $('#second-course').prepend('<div class="title">Второй курс:</div>')
 
             for (let j = 0; j < topics2.length; j += 1) {
                 $('#second-course .themes').append('<li><p class="deactive">' + topics2.eq(j).html() + '</p><ul class="sublist" style="display: none;">');
@@ -227,23 +285,30 @@ document.addEventListener('DOMContentLoaded', function () {
                 $('#second-course .themes').append('</ul></li>');
             }
 
+            // бинд ссылок и установки ширины
             bindLinkClickHandler($('a'));
             minWidth();
 
             let offsets = [];
 
+            // складываем меню
             $('.themes ul:visible').slideUp();
             $('.themes>li').each(function () {
                 offsets.push($(this).offset().top);
             });
 
+
+            // бинд меню, настроек и отправка наверх
             initMenu(offsets);
-            if (checkURL(window.location.href) === false) {
+            bindSettings();
+            if (!checkURL(window.location.href)) {
                 $("body,html").animate({
                     scrollTop: 0
                 }, 1);
             }
 
+
+            // бинд кнопки вверх
             $(window).scroll(function () {
                 if ($(this).scrollTop() > 200) {
                     $('#btnScrollTop').fadeIn();
@@ -257,6 +322,17 @@ document.addEventListener('DOMContentLoaded', function () {
                     scrollTop: 0
                 }, 600);
                 return false;
+            });
+
+            // бинд настроек
+            const popup = document.getElementById('popup');
+            document.getElementById('closeBtn').addEventListener('click', () => {
+                popup.style.display = 'none';
+                popup.style.opacity = '0';
+            });
+            document.getElementById('settings').addEventListener('click', () => {
+                popup.style.display = 'block';
+                popup.style.opacity = '1';
             });
         }
     });
