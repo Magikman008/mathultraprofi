@@ -3,7 +3,9 @@ function checkURL(href) {
     const hash = url.hash;
 
     if (hash && window.location.pathname === url.pathname) {
-        let element = document.querySelector('a[name="' + hash.substring(1) + '"]');
+        let element = document.querySelector(
+            'a[name="' + hash.substring(1) + '"]'
+        );
         if (element) {
             element.scrollIntoView({ behavior: 'smooth' });
             return true;
@@ -17,7 +19,7 @@ function minWidth() {
     const images = container.querySelectorAll('img');
     let maxWidth = 0;
 
-    images.forEach(image => {
+    images.forEach((image) => {
         const width = image.width;
         if (width > maxWidth) {
             maxWidth = width;
@@ -26,8 +28,7 @@ function minWidth() {
 
     if (maxWidth < 300) {
         container.style.minWidth = '300px';
-    }
-    else {
+    } else {
         container.style.minWidth = `${maxWidth}px`;
     }
 }
@@ -35,8 +36,7 @@ function minWidth() {
 function isPdf(href) {
     let ext = href.split('.').pop();
 
-    return ext === "pdf";
-
+    return ext === 'pdf';
 }
 
 function ajaxLoad(href, isPopState = false) {
@@ -62,26 +62,34 @@ function ajaxLoad(href, isPopState = false) {
         xhr: function () {
             var xhr = new window.XMLHttpRequest();
             // прогресс загрузки на сервер
-            xhr.upload.addEventListener("progress", function (evt) {
-                if (evt.lengthComputable) {
-                    var percentComplete = evt.loaded / evt.total;
-                    console.log("pivo");
-                    console.log(percentComplete);
-                }
-            }, false);
+            xhr.upload.addEventListener(
+                'progress',
+                function (evt) {
+                    if (evt.lengthComputable) {
+                        var percentComplete = evt.loaded / evt.total;
+                        console.log('pivo');
+                        console.log(percentComplete);
+                    }
+                },
+                false
+            );
             // прогресс скачивания с сервера
-            xhr.addEventListener("progress", function (evt) {
-                if (evt.lengthComputable) {
-                    var percentComplete = evt.loaded / evt.total;
-                    console.log("pivo");
-                    // делать что-то...
-                    console.log(percentComplete);
-                }
-            }, false);
+            xhr.addEventListener(
+                'progress',
+                function (evt) {
+                    if (evt.lengthComputable) {
+                        var percentComplete = evt.loaded / evt.total;
+                        console.log('pivo');
+                        // делать что-то...
+                        console.log(percentComplete);
+                    }
+                },
+                false
+            );
             return xhr;
         },
         url: href,
-        type: "GET",
+        type: 'GET',
         success: function (response) {
             try {
                 let tdElements = $(response).find('td').eq(2);
@@ -112,9 +120,12 @@ function ajaxLoad(href, isPopState = false) {
                 });
 
                 if (!checkURL(href)) {
-                    $("body,html").animate({
-                        scrollTop: 0
-                    }, 600);
+                    $('body,html').animate(
+                        {
+                            scrollTop: 0,
+                        },
+                        600
+                    );
                 }
 
                 if (!isPopState) {
@@ -125,41 +136,54 @@ function ajaxLoad(href, isPopState = false) {
                 window.location.href = href;
                 location.reload(false);
             }
-        }, error: function (jqXHR, textStatus, errorThrown) {
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
             window.location.href = href;
             location.reload(false);
 
-            console.log("Ошибка загрузки данных: " + textStatus + " " + errorThrown);
-        }
+            console.log(
+                'Ошибка загрузки данных: ' + textStatus + ' ' + errorThrown
+            );
+        },
     });
 }
 
-window.addEventListener("popstate", function (e) {
-    $("body,html").animate({
-        scrollTop: 0
-    }, 600);
-    ajaxLoad(location.pathname, true);
-}, false)
+window.addEventListener(
+    'popstate',
+    function (e) {
+        $('body,html').animate(
+            {
+                scrollTop: 0,
+            },
+            600
+        );
+        ajaxLoad(location.pathname, true);
+    },
+    false
+);
 
 function initMenu(offsets) {
     $('.themes li p').click(function () {
         let iselemnt = $(this).next();
 
-        if ((iselemnt.is('ul')) && (iselemnt.is(':visible'))) {
+        if (iselemnt.is('ul') && iselemnt.is(':visible')) {
             iselemnt.slideUp();
             $(this).removeClass('active');
 
             return false;
         }
 
-        if ((iselemnt.is('ul')) && (!iselemnt.is(':visible'))) {
+        if (iselemnt.is('ul') && !iselemnt.is(':visible')) {
             $('.themes p.active').removeClass('active');
             $('.themes ul:visible').slideUp();
             $(this).addClass('active');
             iselemnt.slideDown();
-            $('html, body').animate({
-                scrollTop: offsets[$('.themes p').index(this)]
-            }, 500);
+            $('html, body').animate(
+                {
+                    scrollTop: offsets[$('.themes p').index(this)],
+                },
+                500
+            );
             return false;
         }
     });
@@ -187,9 +211,12 @@ function bindLinkClickHandler(a) {
 function checkSettings() {
     chrome.storage.local.get(['enabled'], function (result) {
         if (!result.enabled) {
-            chrome.storage.local.set({
-                'font': "Arial, sans-serif"
-            }, function () { });
+            chrome.storage.local.set(
+                {
+                    font: 'Arial, sans-serif',
+                },
+                function () {}
+            );
         }
     });
 }
@@ -201,42 +228,63 @@ function bindSettings() {
 
     function toggleTheme() {
         if (themeSwitch.checked) {
-            chrome.storage.local.set({
-                'night': true
-            }, function () {
-                theme.href =chrome.runtime.getURL('/stylesheet/dark.css');
-            });
+            chrome.storage.local.set(
+                {
+                    night: true,
+                },
+                function () {
+                    theme.href = chrome.runtime.getURL('/stylesheet/dark.css');
+                }
+            );
         } else {
-            chrome.storage.local.set({
-                'night': false
-            }, function () {
-                theme.href = chrome.runtime.getURL('/stylesheet/light.css')
-            });
+            chrome.storage.local.set(
+                {
+                    night: false,
+                },
+                function () {
+                    theme.href = chrome.runtime.getURL('/stylesheet/light.css');
+                }
+            );
         }
     }
 
-    chrome.storage.local.get(['fontToggle', 'font', 'night'], function (result) {
-        fontSwitch.checked = result.fontToggle;
-        themeSwitch.checked = result.night;
-        document.documentElement.style.setProperty('--font', result.font);
-        toggleTheme();
-    });
+    chrome.storage.local.get(
+        ['fontToggle', 'font', 'night'],
+        function (result) {
+            fontSwitch.checked = result.fontToggle;
+            themeSwitch.checked = result.night;
+            document.documentElement.style.setProperty('--font', result.font);
+            toggleTheme();
+        }
+    );
 
     function toggleFont() {
         if (fontSwitch.checked) {
-            chrome.storage.local.set({
-                'fontToggle': true,
-                'font': '"Droid Serif", "Times New Roman", serif'
-            }, function () {
-                document.documentElement.style.setProperty('--font', '"Droid Serif", "Times New Roman", serif');
-            });
+            chrome.storage.local.set(
+                {
+                    fontToggle: true,
+                    font: '"Droid Serif", "Times New Roman", serif',
+                },
+                function () {
+                    document.documentElement.style.setProperty(
+                        '--font',
+                        '"Droid Serif", "Times New Roman", serif'
+                    );
+                }
+            );
         } else {
-            chrome.storage.local.set({
-                'fontToggle': false,
-                'font': "Arial, sans-serif"
-            }, function () {
-                document.documentElement.style.setProperty('--font', "Arial, sans-serif");
-            });
+            chrome.storage.local.set(
+                {
+                    fontToggle: false,
+                    font: 'Arial, sans-serif',
+                },
+                function () {
+                    document.documentElement.style.setProperty(
+                        '--font',
+                        'Arial, sans-serif'
+                    );
+                }
+            );
         }
     }
 
@@ -249,7 +297,7 @@ document.addEventListener('DOMContentLoaded', function () {
         $(this).remove();
     });
 
-    let tds = $("td");
+    let tds = $('td');
     let temp = tds.eq(2);
 
     if (tds.length !== 4) {
@@ -268,7 +316,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
     temp = temp.html();
 
-    document.head.innerHTML += '<link href="' + chrome.runtime.getURL('/stylesheet/light.css') + '" rel="stylesheet" id="theme-link">'
+    document.head.innerHTML +=
+        '<link href="' +
+        chrome.runtime.getURL('/stylesheet/light.css') +
+        '" rel="stylesheet" id="theme-link">';
 
     $.ajax({
         url: chrome.runtime.getURL('/body.html'),
@@ -289,27 +340,61 @@ document.addEventListener('DOMContentLoaded', function () {
 
             let firstCourse = $('#first-course');
             firstCourse.append('<ul class="themes"> </ul>');
-            firstCourse.prepend('<div class="title">Первый курс:</div><div style="padding: 0 10px;" align="center">' + subtopics.eq(0).find('a').eq(0).removeAttr('class').prop('outerHTML') + '<br>' + subtopics.eq(0).find('a').eq(1).removeAttr('class').prop('outerHTML') + '</div>')
+            firstCourse.prepend(
+                '<div class="title">Первый курс:</div><div style="padding: 0 10px;" align="center">' +
+                    subtopics
+                        .eq(0)
+                        .find('a')
+                        .eq(0)
+                        .removeAttr('class')
+                        .prop('outerHTML') +
+                    '<br>' +
+                    subtopics
+                        .eq(0)
+                        .find('a')
+                        .eq(1)
+                        .removeAttr('class')
+                        .prop('outerHTML') +
+                    '</div>'
+            );
 
             let firstCourseThemes = $('#first-course .themes');
             for (let j = 0; j < topics.length; j += 1) {
-                firstCourseThemes.append('<li><p class="deactive">' + topics.eq(j).html() + '</p><ul class="sublist" style="display: none;">');
-                subtopics.eq(j + 1).find('a').each(function () {
-                    $('#first-course .themes .sublist:last').append('<li>' + $(this).prop('outerHTML') + '</li>');
-                });
+                firstCourseThemes.append(
+                    '<li><p class="deactive">' +
+                        topics.eq(j).html() +
+                        '</p><ul class="sublist" style="display: none;">'
+                );
+                subtopics
+                    .eq(j + 1)
+                    .find('a')
+                    .each(function () {
+                        $('#first-course .themes .sublist:last').append(
+                            '<li>' + $(this).prop('outerHTML') + '</li>'
+                        );
+                    });
                 firstCourseThemes.append('</ul></li>');
             }
 
             let seconCourse = $('#second-course');
             seconCourse.append('<ul class="themes"> </ul>');
-            seconCourse.prepend('<div class="title">Второй курс:</div>')
+            seconCourse.prepend('<div class="title">Второй курс:</div>');
 
             let secondCourseThemes = $('#second-course .themes');
             for (let j = 0; j < topics2.length; j += 1) {
-                secondCourseThemes.append('<li><p class="deactive">' + topics2.eq(j).html() + '</p><ul class="sublist" style="display: none;">');
-                subtopics2.eq(j).find('a').each(function () {
-                    $('#second-course .themes .sublist:last').append('<li>' + $(this).prop('outerHTML') + '</li>');
-                });
+                secondCourseThemes.append(
+                    '<li><p class="deactive">' +
+                        topics2.eq(j).html() +
+                        '</p><ul class="sublist" style="display: none;">'
+                );
+                subtopics2
+                    .eq(j)
+                    .find('a')
+                    .each(function () {
+                        $('#second-course .themes .sublist:last').append(
+                            '<li>' + $(this).prop('outerHTML') + '</li>'
+                        );
+                    });
                 secondCourseThemes.append('</ul></li>');
             }
 
@@ -325,15 +410,16 @@ document.addEventListener('DOMContentLoaded', function () {
                 offsets.push($(this).offset().top);
             });
 
-
             // бинд меню, настроек и отправка наверх
             initMenu(offsets);
             if (!checkURL(window.location.href)) {
-                $("body,html").animate({
-                    scrollTop: 0
-                }, 1);
+                $('body,html').animate(
+                    {
+                        scrollTop: 0,
+                    },
+                    1
+                );
             }
-
 
             // бинд кнопки вверх
             $(window).scroll(function () {
@@ -345,9 +431,12 @@ document.addEventListener('DOMContentLoaded', function () {
             });
 
             $('#btnScrollTop').click(function () {
-                $('html, body').animate({
-                    scrollTop: 0
-                }, 600);
+                $('html, body').animate(
+                    {
+                        scrollTop: 0,
+                    },
+                    600
+                );
                 return false;
             });
 
@@ -355,20 +444,20 @@ document.addEventListener('DOMContentLoaded', function () {
             const popup = document.getElementById('popup');
             const closeButton = document.getElementById('closeBtn');
 
-            openPopupButton.addEventListener('click', function() {
+            openPopupButton.addEventListener('click', function () {
                 popup.classList.add('show');
             });
 
-            closeButton.addEventListener('click', function() {
+            closeButton.addEventListener('click', function () {
                 popup.classList.remove('show');
             });
 
             // Закрытие попапа при клике вне его
-            window.addEventListener('click', function(event) {
+            window.addEventListener('click', function (event) {
                 if (event.target === popup) {
                     popup.classList.remove('show');
                 }
             });
-        }
+        },
     });
 });
