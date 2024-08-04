@@ -242,7 +242,7 @@ function bindSettings() {
             });
         }
     }
-    
+
     themeSwitch.addEventListener('change', toggleTheme, false);
     fontSwitch.addEventListener('change', toggleFont, false);
 }
@@ -350,14 +350,32 @@ document.addEventListener('DOMContentLoaded', function () {
             });
 
             // бинд настроек
+            // const popup = document.getElementById('popup');
+            // document.getElementById('closeBtn').addEventListener('click', () => {
+            //     popup.style.display = 'none';
+            //     popup.style.opacity = 0;
+            // });
+            // document.getElementById('settings').addEventListener('click', () => {
+            //     popup.style.display = 'block';
+            //     popup.style.opacity = 1;
+            // });
+            const openPopupButton = document.getElementById('settings');
             const popup = document.getElementById('popup');
-            document.getElementById('closeBtn').addEventListener('click', () => {
-                popup.style.display = 'none';
-                popup.style.opacity = 0;
+            const closeButton = document.getElementById('closeBtn');
+
+            openPopupButton.addEventListener('click', function() {
+                popup.classList.add('show');
             });
-            document.getElementById('settings').addEventListener('click', () => {
-                popup.style.display = 'block';
-                popup.style.opacity = 1;
+
+            closeButton.addEventListener('click', function() {
+                popup.classList.remove('show');
+            });
+
+            // Закрытие попапа при клике вне его
+            window.addEventListener('click', function(event) {
+                if (event.target === popup) {
+                    popup.classList.remove('show');
+                }
             });
         }
     });

@@ -23,8 +23,7 @@ body {
 }
 
 * {
-    transition: background 0.2s ease-in-out !important;
-    transition: background-color color background box-shadow 0.2s ease-in-out !important;
+    transition: background 0.2s ease-in-out, background-color 0.2s ease-in-out, color 0.2s ease-in-out, background 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 }
 
 a:link {
@@ -95,13 +94,13 @@ p.classalert {
 
 #bar {
     height: 360px;
-    border: 0px solid gray;
+    border: 0 solid gray;
     overflow: scroll;
     overflow-x: hidden;
     padding: 10px;
     font-size: 10pt;
     border-radius: 5px;
-    box-shadow: 0px 0px 10px var(--shadow);
+    box-shadow: 0 0 10px var(--shadow);
 }
 
 .logo {
@@ -120,7 +119,7 @@ p.classalert {
 .logo_black {
     font-size: 30pt;
     color: var(--text-color-default);
-    font-family: Cambria;
+    font-family: Cambria, serif;
 }
 
 .title {
@@ -181,7 +180,7 @@ p.classalert {
     background-color: var(--background);
     border-radius: 10px;
     padding: 10px;
-    box-shadow: 0px 0px 10px var(--shadow);
+    box-shadow: 0 0 10px var(--shadow);
 }
 
 .cont {
@@ -213,7 +212,7 @@ ul.themes li.selected ul {
 }
 
 ul.themes li {
-    transition: 0.2s ease-in-out;
+    transition: background-color .2s ease-in-out;
     background: var(--background);
     color: var(--text-color-default);
     margin: 0;
@@ -221,15 +220,14 @@ ul.themes li {
 
 ul.themes li p {
     font-size: 14pt;
-    padding: 7px;
-    padding-right: 14px;
-    margin: 0px;
+    padding: 7px 14px 7px 7px;
+    margin: 0;
 }
 
 ul.themes li ul li {
-    transition: 0.2s ease-in-out;
+    transition: background-color .2s ease-in-out;
     background: var(--background);
-    border-radius: 0px;
+    border-radius: 0;
     display: flex
 }
 
@@ -249,16 +247,16 @@ ul.themes a:link {
 }
 
 ul.themes li ul li:first-child {
-    border-radius: 0px;
+    border-radius: 0;
     border: 0;
 }
 
 .themes li:last-child ul li:last-child {
-    border-radius: 0px 0px 10px 10px;
+    border-radius: 0 0 10px 10px;
 }
 
 .themes>li:last-child {
-    border-radius: 0px 0px 10px 10px;
+    border-radius: 0 0 10px 10px;
 }
 
 .deactive:after {
@@ -278,7 +276,7 @@ ul.themes li ul li:first-child {
 }
 
 .active:after {
-    content: '\−' !important;
+    content: '−' !important;
 }
 
 .themes a {
@@ -326,13 +324,13 @@ a span {
 
 #btnScrollTop {
     display: none;
-    transition: 0.2s ease-in-out;
+    transition: display 0.2s ease-in-out;
     position: fixed;
     right: 20px;
     bottom: 20px;
     background-color: var(--background);
     border-radius: 22px;
-    box-shadow: 0px 0px 10px var(--shadow);
+    box-shadow: 0 0 10px var(--shadow);
     cursor: pointer;
     width: 44px;
     height: 44px;
@@ -359,13 +357,13 @@ a span {
 
 #settings {
     display: block;
-    transition: 0.2s ease-in-out;
+    transition: display 0.2s ease-in-out;
     position: fixed;
     right: 20px;
     top: 20px;
     background-color: var(--background);
     border-radius: 22px;
-    box-shadow: 0px 0px 10px var(--shadow);
+    box-shadow: 0 0 10px var(--shadow);
     cursor: pointer;
     width: 44px;
     height: 44px;
@@ -393,14 +391,19 @@ a span {
 .popup {
     display: none;
     opacity: 0;
-    transition: 2s ease-in-out;
+    transition: opacity 2s ease-in-out !important;
     height: 100%;
     width: 100%;
     background-color: rgba(0, 0, 0, 0.3);
     position: fixed;
-    top: 0px;
-    left: 0px;
+    top: 0;
+    left: 0;
     z-index: 9999;
+}
+
+.popup.show {
+    display: block; /* Показать попап */
+    opacity: 1;
 }
 
 .popup-content {
@@ -412,6 +415,7 @@ a span {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    transition: transform 2s ease-in-out !important;
 }
 
 .close img {
@@ -487,8 +491,8 @@ a span {
     right: 0;
     bottom: 0;
     background-color: #d3d3d3;
-    -webkit-transition: .2s;
-    transition: .2s;
+    -webkit-transition: background-color 2s;
+    transition: background-color 2s;
     border-radius: 34px;
 }
 
@@ -499,8 +503,8 @@ a span {
     width: 16px;
     left: 4px;
     background-color: white;
-    -webkit-transition: .2s;
-    transition: .2s;
+    -webkit-transition: background-color 2s;
+    transition: background-color 2s, transform ease-in-out .2s;
     border-radius: 50%;
 }
 
@@ -512,4 +516,5 @@ input:checked+.slider:before {
     -webkit-transform: translateX(21px);
     -ms-transform: translateX(21px);
     transform: translateX(21px);
+    transition: transform ease-in-out .2s;
 }
