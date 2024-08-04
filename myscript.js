@@ -35,10 +35,8 @@ function minWidth() {
 function isPdf(href) {
     let ext = href.split('.').pop();
 
-    if (ext === "pdf") {
-        return true;
-    }
-    return false;
+    return ext === "pdf";
+
 }
 
 function ajaxLoad(href, isPopState = false) {
@@ -99,16 +97,16 @@ function ajaxLoad(href, isPopState = false) {
                 }
 
                 let toRemove = tdElements.find('noindex');
-                let title = $(response).filter('title').text();
-                document.title = title;
+                document.title = $(response).filter('title').text();
 
                 for (let i = 0; i < toRemove.length; i++) {
                     toRemove[i].remove();
                 }
 
-                $('#content').fadeOut(300, function () {
-                    $('#content').html(tdElements.html());
-                    bindLinkClickHandler($('#content').find('a'));
+                let content = $('#content');
+                content.fadeOut(300, function () {
+                    content.html(tdElements.html());
+                    bindLinkClickHandler(content.find('a'));
                     minWidth();
                     $(this).fadeIn(300);
                 });
@@ -190,7 +188,6 @@ function checkSettings() {
     chrome.storage.local.get(['enabled'], function (result) {
         if (!result.enabled) {
             chrome.storage.local.set({
-                'font': false,
                 'font': "Arial, sans-serif"
             }, function () { });
         }
@@ -255,7 +252,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let tds = $("td");
     let temp = tds.eq(2);
 
-    if (tds.length != 4) {
+    if (tds.length !== 4) {
         temp = tds.eq(1);
     }
 
@@ -277,11 +274,12 @@ document.addEventListener('DOMContentLoaded', function () {
         url: chrome.runtime.getURL('/body.html'),
         dataType: 'html',
         success: function (response) {
-            $('td').eq(1).find('br').replaceWith(' ');
-            let topics = $('td').eq(1).find('div:first p.classtopic');
-            let subtopics = $('td').eq(1).find('div:first p.classs');
-            let topics2 = $('td').eq(1).find('div:eq(1) p.classtopic');
-            let subtopics2 = $('td').eq(1).find('div:eq(1) p.classs');
+            let tds = $('td');
+            tds.eq(1).find('br').replaceWith(' ');
+            let topics = tds.eq(1).find('div:first p.classtopic');
+            let subtopics = tds.eq(1).find('div:first p.classs');
+            let topics2 = tds.eq(1).find('div:eq(1) p.classtopic');
+            let subtopics2 = tds.eq(1).find('div:eq(1) p.classs');
 
             document.body.innerHTML = response;
             bindSettings();
@@ -289,26 +287,30 @@ document.addEventListener('DOMContentLoaded', function () {
 
             document.getElementById('content').innerHTML = temp;
 
-            $('#first-course').append('<ul class="themes"> </ul>');
-            $('#first-course').prepend('<div class="title">Первый курс:</div><div style="padding: 0 10px;" align="center">' + subtopics.eq(0).find('a').eq(0).removeAttr('class').prop('outerHTML') + '<br>' + subtopics.eq(0).find('a').eq(1).removeAttr('class').prop('outerHTML') + '</div>')
+            let firstCourse = $('#first-course');
+            firstCourse.append('<ul class="themes"> </ul>');
+            firstCourse.prepend('<div class="title">Первый курс:</div><div style="padding: 0 10px;" align="center">' + subtopics.eq(0).find('a').eq(0).removeAttr('class').prop('outerHTML') + '<br>' + subtopics.eq(0).find('a').eq(1).removeAttr('class').prop('outerHTML') + '</div>')
 
+            let firstCourseThemes = $('#first-course .themes');
             for (let j = 0; j < topics.length; j += 1) {
-                $('#first-course .themes').append('<li><p class="deactive">' + topics.eq(j).html() + '</p><ul class="sublist" style="display: none;">');
+                firstCourseThemes.append('<li><p class="deactive">' + topics.eq(j).html() + '</p><ul class="sublist" style="display: none;">');
                 subtopics.eq(j + 1).find('a').each(function () {
                     $('#first-course .themes .sublist:last').append('<li>' + $(this).prop('outerHTML') + '</li>');
                 });
-                $('#first-course .themes').append('</ul></li>');
+                firstCourseThemes.append('</ul></li>');
             }
 
-            $('#second-course').append('<ul class="themes"> </ul>');
-            $('#second-course').prepend('<div class="title">Второй курс:</div>')
+            let seconCourse = $('#second-course');
+            seconCourse.append('<ul class="themes"> </ul>');
+            seconCourse.prepend('<div class="title">Второй курс:</div>')
 
+            let secondCourseThemes = $('#second-course .themes');
             for (let j = 0; j < topics2.length; j += 1) {
-                $('#second-course .themes').append('<li><p class="deactive">' + topics2.eq(j).html() + '</p><ul class="sublist" style="display: none;">');
+                secondCourseThemes.append('<li><p class="deactive">' + topics2.eq(j).html() + '</p><ul class="sublist" style="display: none;">');
                 subtopics2.eq(j).find('a').each(function () {
                     $('#second-course .themes .sublist:last').append('<li>' + $(this).prop('outerHTML') + '</li>');
                 });
-                $('#second-course .themes').append('</ul></li>');
+                secondCourseThemes.append('</ul></li>');
             }
 
             // бинд ссылок и установки ширины
@@ -349,16 +351,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 return false;
             });
 
-            // бинд настроек
-            // const popup = document.getElementById('popup');
-            // document.getElementById('closeBtn').addEventListener('click', () => {
-            //     popup.style.display = 'none';
-            //     popup.style.opacity = 0;
-            // });
-            // document.getElementById('settings').addEventListener('click', () => {
-            //     popup.style.display = 'block';
-            //     popup.style.opacity = 1;
-            // });
             const openPopupButton = document.getElementById('settings');
             const popup = document.getElementById('popup');
             const closeButton = document.getElementById('closeBtn');
