@@ -187,9 +187,9 @@ function bindLinkClickHandler(a) {
 }
 
 function checkSettings() {
-    chrome.storage.sync.get(['enabled'], function (result) {
+    chrome.storage.local.get(['enabled'], function (result) {
         if (!result.enabled) {
-            chrome.storage.sync.set({
+            chrome.storage.local.set({
                 'font': false,
                 'font': "Arial, sans-serif"
             }, function () { });
@@ -199,21 +199,42 @@ function checkSettings() {
 
 function bindSettings() {
     const fontSwitch = document.getElementById('font');
-    chrome.storage.sync.get(['fontToggle', 'font'], function (result) {
+    const themeSwitch = document.getElementById('theme');
+    const theme = document.getElementById('theme-link');
+
+    function toggleTheme() {
+        if (themeSwitch.checked) {
+            chrome.storage.local.set({
+                'night': true
+            }, function () {
+                theme.href =chrome.runtime.getURL('/stylesheet/dark.css');
+            });
+        } else {
+            chrome.storage.local.set({
+                'night': false
+            }, function () {
+                theme.href = chrome.runtime.getURL('/stylesheet/light.css')
+            });
+        }
+    }
+
+    chrome.storage.local.get(['fontToggle', 'font', 'night'], function (result) {
         fontSwitch.checked = result.fontToggle;
+        themeSwitch.checked = result.night;
         document.documentElement.style.setProperty('--font', result.font);
+        toggleTheme();
     });
 
     function toggleFont() {
         if (fontSwitch.checked) {
-            chrome.storage.sync.set({
+            chrome.storage.local.set({
                 'fontToggle': true,
-                'font': '-apple-system,BlinkMacSystemFont,"Segoe UI Adjusted","Segoe UI","Liberation Sans",sans-serif'
+                'font': '"Droid Serif", "Times New Roman", serif'
             }, function () {
-                document.documentElement.style.setProperty('--font', '-apple-system,BlinkMacSystemFont,"Segoe UI Adjusted","Segoe UI","Liberation Sans",sans-serif');
+                document.documentElement.style.setProperty('--font', '"Droid Serif", "Times New Roman", serif');
             });
         } else {
-            chrome.storage.sync.set({
+            chrome.storage.local.set({
                 'fontToggle': false,
                 'font': "Arial, sans-serif"
             }, function () {
@@ -221,6 +242,8 @@ function bindSettings() {
             });
         }
     }
+    
+    themeSwitch.addEventListener('change', toggleTheme, false);
     fontSwitch.addEventListener('change', toggleFont, false);
 }
 
@@ -248,6 +271,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     temp = temp.html();
 
+    document.head.innerHTML += '<link href="' + chrome.runtime.getURL('/stylesheet/light.css') + '" rel="stylesheet" id="theme-link">'
+
     $.ajax({
         url: chrome.runtime.getURL('/body.html'),
         dataType: 'html',
@@ -259,6 +284,7 @@ document.addEventListener('DOMContentLoaded', function () {
             let subtopics2 = $('td').eq(1).find('div:eq(1) p.classs');
 
             document.body.innerHTML = response;
+            bindSettings();
             $('.themes ul:visible').slideUp();
 
             document.getElementById('content').innerHTML = temp;
@@ -300,7 +326,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
             // бинд меню, настроек и отправка наверх
             initMenu(offsets);
-            bindSettings();
             if (!checkURL(window.location.href)) {
                 $("body,html").animate({
                     scrollTop: 0
@@ -328,11 +353,11 @@ document.addEventListener('DOMContentLoaded', function () {
             const popup = document.getElementById('popup');
             document.getElementById('closeBtn').addEventListener('click', () => {
                 popup.style.display = 'none';
-                popup.style.opacity = '0';
+                popup.style.opacity = 0;
             });
             document.getElementById('settings').addEventListener('click', () => {
                 popup.style.display = 'block';
-                popup.style.opacity = '1';
+                popup.style.opacity = 1;
             });
         }
     });

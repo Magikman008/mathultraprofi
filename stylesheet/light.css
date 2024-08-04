@@ -1,0 +1,9 @@
+:root {
+    --background: white;
+    --background-body: #fbfbfb;
+    --background-grey: rgb(231, 231, 231);
+    --background-hover: rgb(211, 211, 211);
+    --shadow: rgb(217, 217, 217);
+    --text-color-default: black;
+    --invert: invert(0);
+}
