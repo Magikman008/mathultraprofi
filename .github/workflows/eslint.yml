@@ -40,7 +40,8 @@ jobs:
         uses: wearerequired/lint-action@v2.3.0
         with:
           eslint: true
-          eslint_args: " . --config eslint.config.mjs"
+          eslint_args: " . --config eslint.config.mjs --ext "
+          eslint_extensions: js
           prettier: true
           eslint_auto_fix: false
           prettier_auto_fix: false
