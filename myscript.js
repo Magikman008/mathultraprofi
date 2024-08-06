@@ -1,10 +1,10 @@
 function checkURL(href) {
     const url = new URL(href, window.location.href);
-    const hash = url.hash;
+    const { hash } = url;
 
     if (hash && window.location.pathname === url.pathname) {
-        let element = document.querySelector(
-            'a[name="' + hash.substring(1) + '"]'
+        const element = document.querySelector(
+            `a[name="${hash.substring(1)}"]`,
         );
         if (element) {
             element.scrollIntoView({ behavior: 'smooth' });
@@ -20,7 +20,7 @@ function minWidth() {
     let maxWidth = 0;
 
     images.forEach((image) => {
-        const width = image.width;
+        const { width } = image;
         if (width > maxWidth) {
             maxWidth = width;
         }
@@ -34,7 +34,7 @@ function minWidth() {
 }
 
 function isPdf(href) {
-    let ext = href.split('.').pop();
+    const ext = href.split('.').pop();
 
     return ext === 'pdf';
 }
@@ -59,38 +59,38 @@ function ajaxLoad(href, isPopState = false) {
     // }
 
     $.ajax({
-        xhr: function () {
-            var xhr = new window.XMLHttpRequest();
+        xhr() {
+            const xhr = new window.XMLHttpRequest();
             // прогресс загрузки на сервер
             xhr.upload.addEventListener(
                 'progress',
-                function (evt) {
+                (evt) => {
                     if (evt.lengthComputable) {
-                        var percentComplete = evt.loaded / evt.total;
+                        const percentComplete = evt.loaded / evt.total;
                         console.log('pivo');
                         console.log(percentComplete);
                     }
                 },
-                false
+                false,
             );
             // прогресс скачивания с сервера
             xhr.addEventListener(
                 'progress',
-                function (evt) {
+                (evt) => {
                     if (evt.lengthComputable) {
-                        var percentComplete = evt.loaded / evt.total;
+                        const percentComplete = evt.loaded / evt.total;
                         console.log('pivo');
                         // делать что-то...
                         console.log(percentComplete);
                     }
                 },
-                false
+                false,
             );
             return xhr;
         },
         url: href,
         type: 'GET',
-        success: function (response) {
+        success(response) {
             try {
                 let tdElements = $(response).find('td').eq(2);
 
@@ -104,14 +104,14 @@ function ajaxLoad(href, isPopState = false) {
                     firstChild = tdElements.children().first();
                 }
 
-                let toRemove = tdElements.find('noindex');
+                const toRemove = tdElements.find('noindex');
                 document.title = $(response).filter('title').text();
 
                 for (let i = 0; i < toRemove.length; i++) {
                     toRemove[i].remove();
                 }
 
-                let content = $('#content');
+                const content = $('#content');
                 content.fadeOut(300, function () {
                     content.html(tdElements.html());
                     bindLinkClickHandler(content.find('a'));
@@ -124,7 +124,7 @@ function ajaxLoad(href, isPopState = false) {
                         {
                             scrollTop: 0,
                         },
-                        600
+                        600,
                     );
                 }
 
@@ -137,12 +137,12 @@ function ajaxLoad(href, isPopState = false) {
                 location.reload(false);
             }
         },
-        error: function (jqXHR, textStatus, errorThrown) {
+        error(jqXHR, textStatus, errorThrown) {
             window.location.href = href;
             location.reload(false);
 
             console.log(
-                'Ошибка загрузки данных: ' + textStatus + ' ' + errorThrown
+                `Ошибка загрузки данных: ${textStatus} ${errorThrown}`,
             );
         },
     });
@@ -150,21 +150,21 @@ function ajaxLoad(href, isPopState = false) {
 
 window.addEventListener(
     'popstate',
-    function (e) {
+    (e) => {
         $('body,html').animate(
             {
                 scrollTop: 0,
             },
-            600
+            600,
         );
         ajaxLoad(location.pathname, true);
     },
-    false
+    false,
 );
 
 function initMenu(offsets) {
     $('.themes li p').click(function () {
-        let iselemnt = $(this).next();
+        const iselemnt = $(this).next();
 
         if (iselemnt.is('ul') && iselemnt.is(':visible')) {
             iselemnt.slideUp();
@@ -182,7 +182,7 @@ function initMenu(offsets) {
                 {
                     scrollTop: offsets[$('.themes p').index(this)],
                 },
-                500
+                500,
             );
             return false;
         }
@@ -190,9 +190,9 @@ function initMenu(offsets) {
 }
 
 function bindLinkClickHandler(a) {
-    let r = new RegExp('^(?:[a-z+]+:)?//', 'i');
+    const r = new RegExp('^(?:[a-z+]+:)?//', 'i');
     a.each(function () {
-        let href = $(this).attr('href');
+        const href = $(this).attr('href');
         if (href && href.indexOf(document.domain) < 0 && r.test(href)) {
             $(this).attr('target', '_blank');
         } else {
@@ -200,7 +200,7 @@ function bindLinkClickHandler(a) {
         }
     });
     a.click(function (event) {
-        let href = $(this).attr('href');
+        const href = $(this).attr('href');
         if (location.hostname === this.hostname || !this.hostname.length) {
             ajaxLoad(href, false);
             event.preventDefault();
@@ -209,13 +209,13 @@ function bindLinkClickHandler(a) {
 }
 
 function checkSettings() {
-    chrome.storage.local.get(['enabled'], function (result) {
+    chrome.storage.local.get(['enabled'], (result) => {
         if (!result.enabled) {
             chrome.storage.local.set(
                 {
                     font: 'Arial, sans-serif',
                 },
-                function () {}
+                () => {},
             );
         }
     });
@@ -232,30 +232,30 @@ function bindSettings() {
                 {
                     night: true,
                 },
-                function () {
+                () => {
                     theme.href = chrome.runtime.getURL('/stylesheet/dark.css');
-                }
+                },
             );
         } else {
             chrome.storage.local.set(
                 {
                     night: false,
                 },
-                function () {
+                () => {
                     theme.href = chrome.runtime.getURL('/stylesheet/light.css');
-                }
+                },
             );
         }
     }
 
     chrome.storage.local.get(
         ['fontToggle', 'font', 'night'],
-        function (result) {
+        (result) => {
             fontSwitch.checked = result.fontToggle;
             themeSwitch.checked = result.night;
             document.documentElement.style.setProperty('--font', result.font);
             toggleTheme();
-        }
+        },
     );
 
     function toggleFont() {
@@ -265,12 +265,12 @@ function bindSettings() {
                     fontToggle: true,
                     font: '"Droid Serif", "Times New Roman", serif',
                 },
-                function () {
+                () => {
                     document.documentElement.style.setProperty(
                         '--font',
-                        '"Droid Serif", "Times New Roman", serif'
+                        '"Droid Serif", "Times New Roman", serif',
                     );
-                }
+                },
             );
         } else {
             chrome.storage.local.set(
@@ -278,12 +278,12 @@ function bindSettings() {
                     fontToggle: false,
                     font: 'Arial, sans-serif',
                 },
-                function () {
+                () => {
                     document.documentElement.style.setProperty(
                         '--font',
-                        'Arial, sans-serif'
+                        'Arial, sans-serif',
                     );
-                }
+                },
             );
         }
     }
@@ -292,12 +292,12 @@ function bindSettings() {
     fontSwitch.addEventListener('change', toggleFont, false);
 }
 
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', () => {
     $('noindex').each(function () {
         $(this).remove();
     });
 
-    let tds = $('td');
+    const tds = $('td');
     let temp = tds.eq(2);
 
     if (tds.length !== 4) {
@@ -316,21 +316,21 @@ document.addEventListener('DOMContentLoaded', function () {
 
     temp = temp.html();
 
-    document.head.innerHTML +=
-        '<link href="' +
-        chrome.runtime.getURL('/stylesheet/light.css') +
-        '" rel="stylesheet" id="theme-link">';
+    document.head.innerHTML
+        += `<link href="${
+            chrome.runtime.getURL('/stylesheet/light.css')
+        }" rel="stylesheet" id="theme-link">`;
 
     $.ajax({
         url: chrome.runtime.getURL('/body.html'),
         dataType: 'html',
-        success: function (response) {
-            let tds = $('td');
+        success(response) {
+            const tds = $('td');
             tds.eq(1).find('br').replaceWith(' ');
-            let topics = tds.eq(1).find('div:first p.classtopic');
-            let subtopics = tds.eq(1).find('div:first p.classs');
-            let topics2 = tds.eq(1).find('div:eq(1) p.classtopic');
-            let subtopics2 = tds.eq(1).find('div:eq(1) p.classs');
+            const topics = tds.eq(1).find('div:first p.classtopic');
+            const subtopics = tds.eq(1).find('div:first p.classs');
+            const topics2 = tds.eq(1).find('div:eq(1) p.classtopic');
+            const subtopics2 = tds.eq(1).find('div:eq(1) p.classs');
 
             document.body.innerHTML = response;
             bindSettings();
@@ -338,61 +338,61 @@ document.addEventListener('DOMContentLoaded', function () {
 
             document.getElementById('content').innerHTML = temp;
 
-            let firstCourse = $('#first-course');
+            const firstCourse = $('#first-course');
             firstCourse.append('<ul class="themes"> </ul>');
             firstCourse.prepend(
-                '<div class="title">Первый курс:</div><div style="padding: 0 10px;" align="center">' +
+                `<div class="title">Первый курс:</div><div style="padding: 0 10px;" align="center">${
                     subtopics
                         .eq(0)
                         .find('a')
                         .eq(0)
                         .removeAttr('class')
-                        .prop('outerHTML') +
-                    '<br>' +
+                        .prop('outerHTML')
+                }<br>${
                     subtopics
                         .eq(0)
                         .find('a')
                         .eq(1)
                         .removeAttr('class')
-                        .prop('outerHTML') +
-                    '</div>'
+                        .prop('outerHTML')
+                }</div>`,
             );
 
-            let firstCourseThemes = $('#first-course .themes');
+            const firstCourseThemes = $('#first-course .themes');
             for (let j = 0; j < topics.length; j += 1) {
                 firstCourseThemes.append(
-                    '<li><p class="deactive">' +
-                        topics.eq(j).html() +
-                        '</p><ul class="sublist" style="display: none;">'
+                    `<li><p class="deactive">${
+                        topics.eq(j).html()
+                    }</p><ul class="sublist" style="display: none;">`,
                 );
                 subtopics
                     .eq(j + 1)
                     .find('a')
                     .each(function () {
                         $('#first-course .themes .sublist:last').append(
-                            '<li>' + $(this).prop('outerHTML') + '</li>'
+                            `<li>${$(this).prop('outerHTML')}</li>`,
                         );
                     });
                 firstCourseThemes.append('</ul></li>');
             }
 
-            let seconCourse = $('#second-course');
+            const seconCourse = $('#second-course');
             seconCourse.append('<ul class="themes"> </ul>');
             seconCourse.prepend('<div class="title">Второй курс:</div>');
 
-            let secondCourseThemes = $('#second-course .themes');
+            const secondCourseThemes = $('#second-course .themes');
             for (let j = 0; j < topics2.length; j += 1) {
                 secondCourseThemes.append(
-                    '<li><p class="deactive">' +
-                        topics2.eq(j).html() +
-                        '</p><ul class="sublist" style="display: none;">'
+                    `<li><p class="deactive">${
+                        topics2.eq(j).html()
+                    }</p><ul class="sublist" style="display: none;">`,
                 );
                 subtopics2
                     .eq(j)
                     .find('a')
                     .each(function () {
                         $('#second-course .themes .sublist:last').append(
-                            '<li>' + $(this).prop('outerHTML') + '</li>'
+                            `<li>${$(this).prop('outerHTML')}</li>`,
                         );
                     });
                 secondCourseThemes.append('</ul></li>');
@@ -402,7 +402,7 @@ document.addEventListener('DOMContentLoaded', function () {
             bindLinkClickHandler($('a'));
             minWidth();
 
-            let offsets = [];
+            const offsets = [];
 
             // складываем меню
             $('.themes ul:visible').slideUp();
@@ -417,7 +417,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     {
                         scrollTop: 0,
                     },
-                    1
+                    1,
                 );
             }
 
@@ -430,12 +430,12 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             });
 
-            $('#btnScrollTop').click(function () {
+            $('#btnScrollTop').click(() => {
                 $('html, body').animate(
                     {
                         scrollTop: 0,
                     },
-                    600
+                    600,
                 );
                 return false;
             });
@@ -444,16 +444,16 @@ document.addEventListener('DOMContentLoaded', function () {
             const popup = document.getElementById('popup');
             const closeButton = document.getElementById('closeBtn');
 
-            openPopupButton.addEventListener('click', function () {
+            openPopupButton.addEventListener('click', () => {
                 popup.classList.add('show');
             });
 
-            closeButton.addEventListener('click', function () {
+            closeButton.addEventListener('click', () => {
                 popup.classList.remove('show');
             });
 
             // Закрытие попапа при клике вне его
-            window.addEventListener('click', function (event) {
+            window.addEventListener('click', (event) => {
                 if (event.target === popup) {
                     popup.classList.remove('show');
                 }
