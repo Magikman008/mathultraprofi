@@ -36,7 +36,7 @@ jobs:
 #        run: eslint . --config eslint.config.mjs
 #        continue-on-error: true
 
-      - name: Run linterss
+      - name: Run linters
         uses: Magikman008/lint-action@master
         with:
           eslint: true
