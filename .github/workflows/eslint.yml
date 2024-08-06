@@ -32,9 +32,9 @@ jobs:
           npm install
 #          npm install @microsoft/eslint-formatter-sarif
 #
-#      - name: Run ESLint
-#        run: eslint --config eslint.config.mjs --format @microsoft/eslint-formatter-sarif --output-file eslint-results.sarif
-#        continue-on-error: true
+      - name: Run ESLint
+        run: eslint --config eslint.config.mjs
+        continue-on-error: true
 
       - name: Run linters
         uses: wearerequired/lint-action@v2.3.0
