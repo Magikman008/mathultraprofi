@@ -40,7 +40,7 @@ jobs:
         uses: rkuykendall/lint-action@master
         with:
           eslint: true
-          eslint_extensions: ""
+          eslint_extensions:
           prettier: true
           eslint_auto_fix: false
           prettier_auto_fix: false
