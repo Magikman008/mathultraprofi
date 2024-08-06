@@ -41,7 +41,9 @@ jobs:
         with:
           eslint: true
           prettier: true
-          eslint_args: "--config eslint.config.mjs"
+          eslint_auto_fix: false
+          prettier_auto_fix: false
+
 
 #      - name: Upload analysis results to GitHub
 #        uses: github/codeql-action/upload-sarif@v3
