@@ -42,7 +42,6 @@ jobs:
           eslint: true
           prettier: true
           eslint_auto_fix: false
-          eslint_extensions: ""
           prettier_auto_fix: false
 
 
