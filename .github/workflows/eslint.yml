@@ -37,10 +37,9 @@ jobs:
 #        continue-on-error: true
 
       - name: Run linters
-        uses: rkuykendall/lint-action@master
+        uses: Magikman008/lint-action@master
         with:
           eslint: true
-          eslint_extensions:
           prettier: true
           eslint_auto_fix: false
           prettier_auto_fix: false
