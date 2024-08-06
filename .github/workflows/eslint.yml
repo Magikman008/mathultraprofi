@@ -37,11 +37,10 @@ jobs:
         continue-on-error: true
 
       - name: Run linters
-        uses: wearerequired/lint-action@v2.3.0
+        uses: wearerequired/lint-action@3402def6dea8dbcf0b8ec42431d9345ee3f69c4d
         with:
           eslint: true
-          eslint_args: " . --config eslint.config.mjs --ext "
-          eslint_extensions: js
+          eslint_args: " . --config eslint.config.mjs"
           prettier: true
           eslint_auto_fix: false
           prettier_auto_fix: false
