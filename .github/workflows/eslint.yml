@@ -33,13 +33,14 @@ jobs:
 #          npm install @microsoft/eslint-formatter-sarif
 #
       - name: Run ESLint
-        run: npx eslint --config eslint.config.mjs
+        run: eslint . --config eslint.config.mjs
         continue-on-error: true
 
       - name: Run linters
         uses: wearerequired/lint-action@v2.3.0
         with:
           eslint: true
+          eslint_args: " . --config eslint.config.mjs"
           prettier: true
           eslint_auto_fix: false
           prettier_auto_fix: false
