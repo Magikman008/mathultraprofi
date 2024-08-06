@@ -33,7 +33,7 @@ jobs:
 #          npm install @microsoft/eslint-formatter-sarif
 #
       - name: Run ESLint
-        run: eslint --config eslint.config.mjs
+        run: npx eslint --config eslint.config.mjs
         continue-on-error: true
 
       - name: Run linters
